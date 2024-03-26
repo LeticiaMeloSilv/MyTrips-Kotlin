@@ -482,7 +482,7 @@ fun Home() {
 
             Text(text = "Categories", modifier = Modifier.padding(top = 20.dp, bottom = 6.dp))
             LazyRow() {
-                item {
+                items(3) {
                     Card(
                         colors = CardDefaults.cardColors(containerColor = Color(0xffCF06F0)),
                         modifier = Modifier.padding(4.dp)
@@ -501,54 +501,6 @@ fun Home() {
                                 bottom = 6.dp,
                                 start = 25.dp,
                                 end = 25.dp
-                            )
-                        )
-
-                    }
-                }
-                item {
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = Color(0x5CCF06F0)),
-                        modifier = Modifier.padding(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Skateboarding, contentDescription = "",
-                            tint = Color.White,
-                            modifier = Modifier
-                                .height(32.dp)
-                                .padding(top = 6.dp, start = 45.dp, end = 45.dp)
-                        )
-                        Text(
-                            text = "Snow",
-                            color = Color.White,
-                            modifier = Modifier.padding(
-                                bottom = 6.dp,
-                                start = 35.dp,
-                                end = 35.dp
-                            )
-                        )
-
-                    }
-                }
-                item {
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = Color(0x5CCF06F0)),
-                        modifier = Modifier.padding(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.BeachAccess, contentDescription = "",
-                            tint = Color.White,
-                            modifier = Modifier
-                                .height(32.dp)
-                                .padding(top = 6.dp, start = 45.dp, end = 45.dp)
-                        )
-                        Text(
-                            text = "Beach",
-                            color = Color.White,
-                            modifier = Modifier.padding(
-                                bottom = 6.dp,
-                                start = 35.dp,
-                                end = 35.dp
                             )
                         )
 
@@ -591,7 +543,7 @@ fun Home() {
                 modifier = Modifier.padding(5.dp)
             )
             LazyColumn() {
-                item {
+                items(2) {
                     Card(
                         colors = CardDefaults.cardColors(
                             containerColor = Color.White,
@@ -616,46 +568,6 @@ fun Home() {
                         Text(
                             text = "London is the capital and largest city of  the United Kingdom," +
                                     " with a population of just under 9 million.",
-                            color = Color(0xffA09C9C),
-                            fontSize = 13.sp,
-                            lineHeight = 13.sp,
-                            modifier = Modifier.padding(5.dp)
-                        )
-                        Text(
-                            text = "18 Feb - 21 Feb",
-                            color = Color(0xffCF06F0),
-                            fontSize = 13.sp,
-                            modifier = Modifier
-                                .align(alignment = Alignment.End)
-                                .padding(6.dp)
-                        )
-                    }
-                }
-                item {
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color.White
-                        ),
-                        modifier = Modifier.padding(6.dp)
-
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.londres),
-                            contentDescription = "Imagem de Londres",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(100.dp),
-                            contentScale = ContentScale.Crop
-
-                        )
-                        Text(
-                            text = "Porto, 2022",
-                            color = Color(0xffCF06F0),
-                            modifier = Modifier.padding(5.dp)
-                        )
-                        Text(
-                            text = "Porto is the second city in Portugal, the capital of the Oporto" +
-                                    "District, and one of the Iberian Peninsula's major urban areas.",
                             color = Color(0xffA09C9C),
                             fontSize = 13.sp,
                             lineHeight = 13.sp,
