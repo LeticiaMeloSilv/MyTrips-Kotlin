@@ -3,6 +3,7 @@ package br.senai.sp.jandira.mytrips.screens
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -278,28 +279,24 @@ fun SignUp(controleDeNavegacao: NavHostController) {
         Row(
             modifier = Modifier.align(Alignment.End)
         ) {
-            Button(
-                onClick = {
-                    controleDeNavegacao.navigate("login")
-                },
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent
-                ),
-            ) {
+
                 Text(
                     text = "Already have an account?",
                     fontFamily = FontFamily.SansSerif,
-                    color = Color(0xFF141414)
+                    color = Color(0xFF141414),
+                    modifier = Modifier.clickable { controleDeNavegacao.navigate("login")},
+
                 )
                 Text(
                     text = "Sign in",
                     color = Color(0xffCF06F0),
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.SansSerif,
-                    modifier = Modifier.padding(end = 16.dp)
+                    modifier = Modifier
+                        .clickable { controleDeNavegacao.navigate("login")}
+                        .padding(end = 16.dp)
                 )
-            }
+
         }
 
     }
