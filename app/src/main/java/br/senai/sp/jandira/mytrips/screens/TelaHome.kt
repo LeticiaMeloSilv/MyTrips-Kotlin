@@ -2,6 +2,7 @@ package br.senai.sp.jandira.mytrips.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ImageNotSupported
 import androidx.compose.material.icons.filled.Landscape
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
@@ -38,26 +41,38 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.mytrips.R
+import br.senai.sp.jandira.mytrips.formatarDataChegadaEDataPartida
+import br.senai.sp.jandira.mytrips.repository.CategoriesRepository
+import br.senai.sp.jandira.mytrips.repository.TripsRepository
+import br.senai.sp.jandira.mytrips.simplificarData
 
 @Composable
 fun Home(controleDeNavegacao: NavHostController) {
-    var pesquisaState= remember {
+    val viagens = TripsRepository().listarTodasAsViagens()
+    val categorias = CategoriesRepository().listarTodasAsCategorias()
+
+    var pesquisaState = remember {
         mutableStateOf("")
     }
-    Image(
-        painter = painterResource(id = R.drawable.paris),
-        contentDescription = "Imagem da torre eifel-Paris",
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp),
-        contentScale = ContentScale.Crop
-    )
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.paris),
+            contentDescription = "Imagem da torre eifel-Paris",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+    }
     Column {
         Column(
             horizontalAlignment = Alignment.End,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(28.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.perfil_susana),
@@ -90,20 +105,25 @@ fun Home(controleDeNavegacao: NavHostController) {
 
             Text(text = "Categories", modifier = Modifier.padding(top = 20.dp, bottom = 6.dp))
             LazyRow() {
-                items(3) {
+                items(categorias) {
                     Card(
                         colors = CardDefaults.cardColors(containerColor = Color(0xffCF06F0)),
                         modifier = Modifier.padding(4.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Landscape, contentDescription = "",
+                            imageVector =
+                            if (it.icon == null)
+                                Icons.Default.ImageNotSupported
+                            else
+                                it.icon!!,
+                            contentDescription = "",
                             tint = Color.White,
                             modifier = Modifier
                                 .height(32.dp)
                                 .padding(top = 6.dp, start = 45.dp, end = 45.dp)
                         )
                         Text(
-                            text = "Montain",
+                            text = it.descricaoIcon,
                             color = Color.White,
                             modifier = Modifier.padding(
                                 bottom = 6.dp,
@@ -119,7 +139,7 @@ fun Home(controleDeNavegacao: NavHostController) {
                 value = pesquisaState.value,
                 onValueChange = {
                     Log.i("Senai", "VALOR: $it ")
-                    pesquisaState.value=it
+                    pesquisaState.value = it
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
@@ -160,7 +180,7 @@ fun Home(controleDeNavegacao: NavHostController) {
                 modifier = Modifier.padding(5.dp)
             )
             LazyColumn() {
-                items(2) {
+                items(viagens) {
                     Card(
                         colors = CardDefaults.cardColors(
                             containerColor = Color.White,
@@ -169,8 +189,12 @@ fun Home(controleDeNavegacao: NavHostController) {
 
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.londres),
-                            contentDescription = "Imagem de Londres",
+                            painter =
+                            if (it.imagem == null)
+                                painterResource(id = R.drawable.padrao)
+                            else
+                                it.imagem!!,
+                            contentDescription = "",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(100.dp),
@@ -178,20 +202,19 @@ fun Home(controleDeNavegacao: NavHostController) {
 
                         )
                         Text(
-                            text = "London, 2019",
+                            text = "${it.destino}, ${it.dataChegada.year}",
                             color = Color(0xffCF06F0),
                             modifier = Modifier.padding(5.dp)
                         )
                         Text(
-                            text = "London is the capital and largest city of  the United Kingdom," +
-                                    " with a population of just under 9 million.",
+                            text = it.descricao,
                             color = Color(0xffA09C9C),
                             fontSize = 13.sp,
                             lineHeight = 13.sp,
                             modifier = Modifier.padding(5.dp)
                         )
                         Text(
-                            text = "18 Feb - 21 Feb",
+                            text = formatarDataChegadaEDataPartida(it.dataChegada, it.dataPartida),
                             color = Color(0xffCF06F0),
                             fontSize = 13.sp,
                             modifier = Modifier
